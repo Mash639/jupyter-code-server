@@ -1,0 +1,24 @@
+version: '3.5'
+
+services:
+  jupyter:
+    container_name: code_server_jupyter_notebook_container
+    #image: jupyter/minimal-notebook
+    build:
+      context: .
+    environment:
+      JUPYTER_TOKEN: "$JUPYTER_TOKEN"
+    ports:
+      - "8488:8888"
+    networks:
+      - jupyternet
+    volumes:
+      - ./jupyter_notebook_config.py:/home/jovyan/.jupyter/jupyter_notebook_config.py
+    restart: unless-stopped
+
+networks:
+  jupyternet:
+    driver: bridge
+
+volumes:
+  jupyter:
